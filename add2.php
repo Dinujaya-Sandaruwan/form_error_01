@@ -1,10 +1,10 @@
 <?php session_start(); ?>
 
-<?php
-if(!isset($_SESSION['valid'])) {
-	header('Location: login.php');
-}
-?>
+<!-- <?php
+// if(!isset($_SESSION['valid'])) {
+// 	header('Location: login.php');
+// }
+?> -->
 
 <html>
 <head>
@@ -28,65 +28,57 @@ if(isset($_POST['Submit'])) {
 	$zip = $_POST['zip'];
 	
 	$login_Id = $_SESSION['id'];
+
+	$correct_form = 'true';
 		
 	// checking empty fields
 
-				
-		if(empty($fname)) {
-			echo "<font color='red'>Frist Name field is empty.</font><br/>";
-		}
-	
-				
-			if(empty($lname)) {
-				echo "<font color='red'>last Name field is empty.</font><br/>";
-			}
-	
-				
-				if(empty($uname)) {
-					echo "<font color='red'>UserName field is empty.</font><br/>";
-				}
-	
-				
-					if(empty($email)) {
-						echo "<font color='red'>email field is empty.</font><br/>";
-					}
-		
-					if(empty($add1)) {
-						echo "<font color='red'>senders address field is empty.</font><br/>";
-					}
-					if(empty($phone)) {
-						echo "<font color='red'>Phone no field is empty.</font><br/>";
-					}
-					if(empty($add2)) {
-						echo "<font color='red'>Recievers address field is empty.</font><br/>";
-					}
-					if(empty($state1)) {
-						echo "<font color='red'>state field is empty.</font><br/>";
-					}
-					if(empty($zip)) {
-						echo "<font color='red'>zip field is empty.</font><br/>";
-					}
-		
-		//link to the previous page
-		echo "<br/><a href='javascript:self.history.back();'>error Go Back</a>";
-	} else { 
-		// if all the fields are filled (not empty) 
-			
-		//insert data to database	
-		$result = mysqli_query($mysqli, "INSERT INTO products(fname, lname, uname, add1, phone, add2, state1, zip, login_id) VALUES('$fname', '$lname', '$name', '$add1', '$phone', '$add2', '$state', '$zip', '$login_Id')");
-		
-		//display success message
-		echo "<font color='green'>Data added successfully.";
-		//echo "<br/><a href='view.php'>View Result</a>";
+	if (empty($fname)) {
+		echo "<font color='red'>Frist Name field is empty.</font><br/>";
+		$correct_form = 'false';
+	  }
+	if (empty($lname)) {
+		echo "<font color='red'>last Name field is empty.</font><br/>";
+		$correct_form = 'false';
+	  }
+	if (empty($uname)) {
+		echo "<font color='red'>UserName field is empty.</font><br/>";
+		$correct_form = 'false';
+	}	
+	if (empty($email)) {
+		echo "<font color='red'>email field is empty.</font><br/>";
+		$correct_form = 'false';
+	}	
+	if (empty($add1)) {
+		echo "<font color='red'>senders address field is empty.</font><br/>";
+		$correct_form = 'false';
+	}	
+	if (empty($phone)) {
+		echo "<font color='red'>Phone no field is empty.</font><br/>";	
+		$correct_form = 'false';	
+	}	
+	if (empty($add2)) {
+		echo "<font color='red'>Recievers address field is empty.</font><br/>";
+		$correct_form = 'false';
+	}	
+	if (empty($state1)) {
+		echo "<font color='red'>state field is empty.</font><br/>";
+		$correct_form = 'false';
+	}	
+	if (empty($zip)) {
+		echo "<font color='red'>zip field is empty.</font><br/>";
+		$correct_form = 'false';
 	}
 
-?>
-<?php 
-	 {
+	
+	if ($correct_form != 'flase') {
+		$sql = "INSERT INTO products(name, login_id, fname, lname, add1, phone, add2, state, zip) VALUES ('$uname','$login_Id','$fname','$lname','$add1','$phone','$add2','$state1','$zip')";
 
+		mysqli_query($mysqli, $sql);
 	}
-
+}
 
 ?>
+
 </body>
 </html>
